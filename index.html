@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <script src="https://www.cssscript.com/demo/line-chart-picograph/picograph.js"> </script>
+</head>
+<body>
+<div class="header">
+    <h1>Моя вентиляція</h1>
+    <div class="button-container">
+        <button class="power-button" id="timerButton" onclick="showTimerModal()">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+        </button>
+        <button class="power-button off" id="powerButton">
+            <i class="fas fa-power-off"></i>
+        </button>
+    </div>
+</div>
+
+<div class="weather-container">
+    <div class="weather-data">
+        <span class="weather-label">Вологість:</span>
+        <span id="humidity" class="weather-value"></span>
+    </div>
+    <div class="weather-data">
+        <span class="weather-label">Температура:</span>
+        <span id="temperature" class="weather-value"></span>
+    </div>
+    <div id="off-time-container" class="weather-data">
+        <span class="weather-label">Вимкнеться в</span>
+        <span id="offTime" class="weather-value">01:50</span>
+    </div>
+</div>
+
+<div class="graph-container">
+    <canvas id="graph" class="graph">  </canvas>
+</div>
+
+<div class="labels-container" id="graphLabels">
+</div>
+
+<div class="switch-container">
+    <div class="switch-label">Турбо:</div>
+    <label class="switch">
+        <input type="checkbox" id="turboSwitch">
+        <span class="slider round"></span>
+    </label>
+</div>
+
+<div id="errorModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="errorMessage"></p>
+    </div>
+</div>
+
+<div id="timerModal" class="timer-modal">
+    <div class="timer-modal-content">
+        <span class="close" onclick="closeTimerModal()">&times;</span>
+        <h3>Запуск по таймеру</h3>
+        <button class="timer-button" onclick="startTimer(5)">5 хвилин</button>
+        <button class="timer-button" onclick="startTimer(15)">15 хвилин</button>
+        <button class="timer-button" onclick="startTimer(30)">30 хвилин</button>
+        <div class="input-container">
+            <input type="number" id="manualInput" placeholder="Введіть хвилини">
+            <button class="timer-button start-button" onclick="startTimerFromInput()">Поїхали</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
