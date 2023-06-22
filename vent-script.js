@@ -70,9 +70,6 @@ function showError(error) {
     }
 }
 
-/* Create graph using picograph */
-// const demoGraph = createGraph("graph", ["Temperature", "Humidity"], "", "graphLabels", 2, 80);
-
 function zeroToNaN(number) {
     if (number <= 0) {
         return NaN;
@@ -113,11 +110,11 @@ function updateGraph(graphData) {
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+            fill: false,
+            interaction: {
+                intersect: false
+            },
+            radius: 0,
         }
     });
 }
