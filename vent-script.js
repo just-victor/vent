@@ -43,23 +43,21 @@ function showTimerModal() {
 
 function showError(error) {
     console.error(error);
-    // const errorMessageElement = document.getElementById('errorMessage');
-    // errorMessageElement.textContent = 'Помилка: ' + error.message;
-    //
-    // const modal = document.getElementById('errorModal');
-    // const closeBtn = document.getElementsByClassName('close')[0];
-    //
-    // modal.style.display = 'block';
-    //
-    // closeBtn.onclick = function () {
-    //   modal.style.display = 'none';
-    // }
-    //
-    // window.onclick = function (event) {
-    //   if (event.target === modal) {
-    //     modal.style.display = 'none';
-    //   }
-    // }
+
+    const infoContainer = document.getElementById("info-container");
+    const infoData = document.getElementById("info-data");
+    infoData.textContent = 'Помилка: ' + error.message;
+    infoContainer.classList.add('red');
+    infoContainer.style.display = 'flex';
+
+    const closeBtn = document.getElementById('close-error');
+    closeBtn.style.display = 'block';
+
+    closeBtn.onclick = function () {
+        infoContainer.classList.remove('red');
+        closeBtn.style.display = 'none';
+        infoContainer.style.display = 'none';
+    }
 }
 
 /* Create graph using picograph */
@@ -74,14 +72,15 @@ function updateGraph(data) {
 
 function updateState(state) {
     switchVent(state.state);
+    const infoContainer = document.getElementById("info-container");
+    infoContainer.classList.remove('red');
 
     if (state.hoursOff != -1 && state.minutesOff != -1) {
-        const offTimeContainer = document.getElementById("off-time-container");
-        const offTime = document.getElementById("offTime");
-        offTime.textContent = state.hoursOff + ':' + state.minutesOff;
-        offTimeContainer.style.display = 'flex';
+        const infoData = document.getElementById("info-data");
+        infoData.textContent = 'Вимкнеться о'+ state.hoursOff + ':' + state.minutesOff;
+        infoContainer.style.display = 'flex';
     } else {
-        offTimeContainer.style.display = 'none';
+        infoContainer.style.display = 'none';
     }
 
     const humidityElement = document.getElementById('humidity');

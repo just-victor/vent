@@ -4,11 +4,23 @@
     justify-content: space-around;
 }
 
-.weather-container {
-    margin-top: 20px;
+.border-container {
     border: 1px solid #ccc;
-    padding: 10px;
     border-radius: 5px;
+    margin-bottom: 5px;
+    background-color: #fafafa;
+}
+.border-container.green {
+    border: 1px solid #72ac4d;
+    background-color: #f1ffeb;
+}
+.border-container.red {
+    border: 1px solid #ac4d4d;
+    background-color: #ffebeb;
+}
+
+.weather-container {
+    padding: 10px;
 }
 
 .weather-data {
@@ -16,6 +28,15 @@
     justify-content: space-between;
     align-items: center; /* Вирівнювання по вертикалі */
     margin-bottom: 10px;
+}
+.info-container {
+    display: flex;
+    /*justify-content: flex-start;*/
+    align-items: center;
+    padding: 0 5px 0 5px;
+}
+.info-data {
+    width: 100%;
 }
 
 .weather-label {
@@ -49,6 +70,7 @@
 }
 
 .close {
+    display: none;
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -163,16 +185,15 @@ input:checked + .slider:before {
 .graph-container {
     display: flex;
     justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .graph {
     height: 200px;
     width: 100%;
     margin-top: 5px;
-    border: 1px solid #ccc;
     padding: 10px;
-    border-radius: 5px;
-    background-color: #fafafa;
 }
 
 .timer-modal-content {
