@@ -4,73 +4,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv='Content-Type' content='text/html;charset=UTF-8'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-<!--    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/just-victor/vent@7b1dd8374bdfc83c789aba7e988901a6f24065a8/style.css">-->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://just-victor.github.io/vent/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://just-victor.github.io/vent/vent-script.js"></script>
+    <script src="https://just-victor.github.io/vent/content-loader-script.js"></script>
 </head>
-<body>
-<div class="header">
-    <h1>Моя вентиляція LOL</h1>
-    <div class="button-container">
-        <button class="power-button" id="timerButton" onclick="showTimerModal();">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-        </button>
-        <button class="power-button off" id="powerButton">
-            <i class="fas fa-power-off"></i>
-        </button>
-    </div>
-</div>
-<div id="info-container" class="info-container border-container green">
-    <span id="info-data" class="info-data">Вимкнеться в 01:50</span>
-    <span id="close-error" class="close">&times;</span>
-</div>
-
-<div class="weather-container border-container">
-    <div class="weather-data">
-        <span class="weather-label">Вологість:</span>
-        <span id="humidity" class="weather-value"></span>
-    </div>
-    <div class="weather-data">
-        <span class="weather-label">Температура:</span>
-        <span id="temperature" class="weather-value"></span>
-    </div>
-</div>
-
-<div class="graph-container border-container">
-    <canvas id="graph"></canvas>
-</div>
-
-<div class="switches-container">
-    <div class="switch-container">
-    <div class="switch-label">Турбо:</div>
-    <label class="switch">
-        <input type="checkbox" id="turboSwitch">
-        <span class="slider round"></span>
-    </label>
-    </div>
-    <div class="switch-container">
-    <div class="switch-label">Автоматичний режим:</div>
-    <label class="switch">
-        <input type="checkbox" id="humidityTriggerSwitch">
-        <span class="slider round"></span>
-    </label>
-    </div>
-</div>
-
-<div id="timerModal" class="timer-modal">
-    <div class="timer-modal-content">
-        <span class="close" onclick="closeTimerModal();">&times;</span>
-        <h3>Запуск по таймеру</h3>
-        <button class="timer-button" onclick="startTimer(5);">5 хвилин</button>
-        <button class="timer-button" onclick="startTimer(15);">15 хвилин</button>
-        <button class="timer-button" onclick="startTimer(30);">30 хвилин</button>
-        <div class="input-container">
-            <input type="number" id="manualInput" placeholder="Введіть хвилини">
-            <button class="timer-button start-button" onclick="startTimerFromInput();">Поїхали</button>
-        </div>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="vent-script.js"></script>
-<!--<script src="https://cdn.jsdelivr.net/gh/just-victor/vent@7b1dd8374bdfc83c789aba7e988901a6f24065a8/vent-script.js"> </script>-->
+<body onload="loadInnerContent()">
+    <div id="content">
+    </div>>
 </body>
 </html>
