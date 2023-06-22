@@ -1,3 +1,7 @@
+const graph = document.getElementById('graph');
+const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
+
 function switchVent(state) {
     const powerButton = document.getElementById('powerButton');
     switch (state) {
@@ -67,13 +71,55 @@ function showError(error) {
 }
 
 /* Create graph using picograph */
-const demoGraph = createGraph("graph", ["Temperature", "Humidity"], "", "graphLabels", 2, 80);
+// const demoGraph = createGraph("graph", ["Temperature", "Humidity"], "", "graphLabels", 2, 80);
 
-function updateGraph(data) {
-    for (let element of data) {
-        demoGraph.update(element.t, 0);
-        demoGraph.update(element.h, 1)
+function zeroToNaN(number) {
+    if (number <= 0) {
+        return NaN;
     }
+}
+function updateGraph(graphData) {
+    const labels = [];
+    labels.length = graphData.length;
+    new Chart(graph, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Вологість',
+                data: graphData.map(it => it.h).map(zeroToNaN),
+                borderColor: 'rgb(90,205,255)',
+                segment: {
+                    borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(90,205,255)'),
+                    borderDash: ctx => skipped(ctx, [6, 6]),
+                },
+                borderWidth: 1,
+                spanGaps: true
+            },{
+                label: 'Температура',
+                data: graphData.map(it => it.t).map(zeroToNaN),
+                borderColor: 'rgb(255,132,42)',
+                segment: {
+                    borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(255,132,42)'),
+                    borderDash: ctx => skipped(ctx, [6, 6]),
+                },
+                borderWidth: 1,
+                spanGaps: true
+            },{
+                label: 'Режим',
+                data: graphData.map(it => it.s).map(zeroToNaN),
+                borderColor: 'rgb(29,157,0)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
 
 function updateState(state) {
