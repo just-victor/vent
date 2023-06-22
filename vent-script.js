@@ -112,7 +112,7 @@ function updateGraph(graphData) {
         options: {
             fill: false,
             interaction: {
-                intersect: false
+                intersect: true
             },
             radius: 0,
         }
