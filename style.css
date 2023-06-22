@@ -185,15 +185,8 @@ input:checked + .slider:before {
 .graph-container {
     display: flex;
     justify-content: center;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.graph {
-    height: 200px;
-    width: 100%;
-    margin-top: 5px;
-    padding: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .timer-modal-content {
