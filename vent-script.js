@@ -31,6 +31,12 @@ turboSwitch.addEventListener('change', () => {
     sendState(state);
 });
 
+const humidityTriggerSwitch = document.getElementById('humidityTriggerSwitch');
+humidityTriggerSwitch.addEventListener('change', () => {
+    const state = humidityTriggerSwitch.checked ? 1 : 0;
+    sendHumidityTriggerState(state);
+});
+
 function closeTimerModal() {
     const modal = document.getElementById('timerModal');
     modal.style.display = 'none';
@@ -90,12 +96,12 @@ function updateState(state) {
 
     const humidityElement = document.getElementById('humidity');
     const temperatureElement = document.getElementById('temperature');
-    const turboSwitch = document.getElementById('turboSwitch');
 
     humidityElement.textContent = state.humidity + '%';
     temperatureElement.textContent = state.temperature + '°C';
 
     turboSwitch.checked = state.state == 2;
+    humidityTriggerSwitch.checked = state.humidityTriggerAllowed == 1;
 }
 
 function sendState(state) {
@@ -104,6 +110,15 @@ function sendState(state) {
         .then(data => {
             updateState(data);
             console.log('Стан оновлено: ' + data.state);
+        })
+        .catch(error => showError(error));
+}
+function sendHumidityTriggerState(state) {
+    fetch('/trigger?state=' + state)
+        .then(response => response.json())
+        .then(data => {
+            updateState(data);
+            console.log('Триггер оновлено: ' + data.humidityTriggerAllowed);
         })
         .catch(error => showError(error));
 }
