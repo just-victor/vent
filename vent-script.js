@@ -77,10 +77,10 @@ function zeroToNaN(number) {
     if (number <= 0) {
         return NaN;
     }
+    return number;
 }
 function updateGraph(graphData) {
-    const labels = [];
-    labels.length = graphData.length;
+    const labels = Array(graphData.length).fill('');
     new Chart(graph, {
         type: 'line',
         data: {
@@ -107,7 +107,7 @@ function updateGraph(graphData) {
                 spanGaps: true
             },{
                 label: 'Режим',
-                data: graphData.map(it => it.s).map(zeroToNaN),
+                data: graphData.map(it => it.s).map(n => n * 10).map(zeroToNaN),
                 borderColor: 'rgb(29,157,0)',
                 borderWidth: 1
             }]
