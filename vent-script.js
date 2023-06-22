@@ -77,7 +77,7 @@ function updateState(state) {
 
     if (state.hoursOff != -1 && state.minutesOff != -1) {
         const infoData = document.getElementById("info-data");
-        const timeString = state.hoursOff.padStart(2, '0') + ':' + state.minutesOff.padStart(2, '0');
+        const timeString = String(state.hoursOff).padStart(2, '0') + ':' + String(state.minutesOff).padStart(2, '0');
         infoData.textContent = 'Вимкнеться о ' + timeString;
         infoContainer.style.display = 'flex';
     } else {
