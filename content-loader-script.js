@@ -4,5 +4,5 @@ function loadInnerContent() {
     fetch("/vent/inner-body.html")
         .then(resp => resp.text())
         .then(text => content.innerHTML = text)
-        .then(() => updateData());
+        .then(() => afterLoad());
 }

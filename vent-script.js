@@ -13,17 +13,17 @@ function afterLoad() {
     turboSwitch = document.getElementById('turboSwitch');
     humidityTriggerSwitch = document.getElementById('humidityTriggerSwitch');
 
-    powerButton.onclick(() => {
+    powerButton.addEventListener('click', () => {
         const state = powerButton.classList.contains('off') ? 1 : 0;
         sendState(state);
     });
 
-    turboSwitch.onchange(() => {
+    turboSwitch.addEventListener('change', () => {
         const state = turboSwitch.checked ? 2 : 1;
         sendState(state);
     });
 
-    humidityTriggerSwitch.onchange(() => {
+    humidityTriggerSwitch.addEventListener('change',() => {
         const state = humidityTriggerSwitch.checked ? 1 : 0;
         sendHumidityTriggerState(state);
     });
