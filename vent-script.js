@@ -74,14 +74,18 @@ function updateState(state) {
     switchVent(state.state);
     const infoContainer = document.getElementById("info-container");
     infoContainer.classList.remove('red');
+    infoContainer.style.display = 'none';
 
+    const infoData = document.getElementById("info-data");
     if (state.hoursOff != -1 && state.minutesOff != -1) {
-        const infoData = document.getElementById("info-data");
         const timeString = String(state.hoursOff).padStart(2, '0') + ':' + String(state.minutesOff).padStart(2, '0');
         infoData.textContent = 'Вимкнеться о ' + timeString;
         infoContainer.style.display = 'flex';
-    } else {
-        infoContainer.style.display = 'none';
+    }
+
+    if (state.humidityAlarm == 1) {
+        infoData.textContent = 'Вимкнеться після зниження вологості!';
+        infoContainer.style.display = 'flex';
     }
 
     const humidityElement = document.getElementById('humidity');
