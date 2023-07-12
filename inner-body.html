@@ -46,6 +46,40 @@
     </div>
 </div>
 
+<div class="settings-container border-container">
+    <div class="weather-data">
+        <span class="weather-label">Налаштування</span>
+        <i id="showSettings" class="fa-solid fa-chevron-down"></i>
+    </div>
+    <div id="settingsHideContainer" style="display: none">
+        <div class="weather-data">
+            <span class="weather-label">Рівень вологості провітрювання:</span>
+            <input type="number" id="ventHumidityLevel" placeholder="0-100%">
+        </div>
+
+        <div class="weather-data">
+            <span class="weather-label">Рівень вологості турбо:</span>
+            <input type="number" id="turboHumidityLevel" placeholder="0-100%">
+        </div>
+
+        <div class="weather-data">
+            <span class="weather-label">Рівень вологості вимкнення вентиляції:</span>
+            <input type="number" id="offHumidityLevel" placeholder="0-100%">
+        </div>
+
+        <div class="weather-data">
+            <span class="weather-label">Затримка між перемиканням режимів, мс:</span>
+            <input type="number" id="switchDelay" placeholder="100-1000мс">
+        </div>
+
+        <div class="weather-data">
+            <span class="weather-label">Затримка вентиляції з кнопки, хв:</span>
+            <input type="number" id="buttonDelay" placeholder="1-60хв">
+        </div>
+        <button id="saveSettingsButton" class="button" disabled>Зберегти</button>
+    </div>
+</div>
+
 <div id="timerModal" class="timer-modal">
     <div class="timer-modal-content">
         <span class="close" onclick="closeTimerModal();">&times;</span>

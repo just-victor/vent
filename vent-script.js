@@ -6,12 +6,33 @@ let graph;
 let powerButton;
 let turboSwitch;
 let humidityTriggerSwitch;
+let showSettingsButton;
+let saveSettingsButton;
+let ventHumidityLevelInput, turboHumidityLevelInput, offHumidityLevelInput, switchDelayInput, buttonDelayInput;
+
+function sendSettings() {
+    fetch(`/settings?ventHumidityLevel=${ventHumidityLevelInput.value}&turboHumidityLevel=${turboHumidityLevelInput.value}&offHumidityLevel=${offHumidityLevelInput.value}&switchDelay=${switchDelayInput.value}&buttonDelay=${buttonDelayInput.value}`)
+        .then(response => response.json())
+        .then(data => {
+            updateState(data);
+            console.log('Стан оновлено: ' + data.state);
+            saveSettingsButton.disabled = true;
+        })
+        .catch(error => showError(error));
+}
 
 function afterLoad() {
     graph = document.getElementById('graph');
     powerButton = document.getElementById('powerButton');
     turboSwitch = document.getElementById('turboSwitch');
     humidityTriggerSwitch = document.getElementById('humidityTriggerSwitch');
+    showSettingsButton = document.getElementById('showSettings');
+    saveSettingsButton = document.getElementById('saveSettingsButton');
+    ventHumidityLevelInput = document.getElementById('ventHumidityLevel');
+    turboHumidityLevelInput = document.getElementById('turboHumidityLevel');
+    offHumidityLevelInput = document.getElementById('offHumidityLevel');
+    switchDelayInput = document.getElementById('switchDelay');
+    buttonDelayInput = document.getElementById('buttonDelay');
 
     powerButton.addEventListener('click', () => {
         const state = powerButton.classList.contains('off') ? 1 : 0;
@@ -28,10 +49,36 @@ function afterLoad() {
         sendHumidityTriggerState(state);
     });
 
+    showSettingsButton.addEventListener('click', () => {
+        let settingsClosed = showSettingsButton.classList.contains('fa-chevron-down');
+        let settingsContainer = document.getElementById('settingsHideContainer');
+
+        if (settingsClosed) {
+            showSettingsButton.classList.remove('fa-chevron-down');
+            showSettingsButton.classList.add('fa-chevron-up');
+            settingsContainer.style.display = 'block';
+        } else {
+            showSettingsButton.classList.remove('fa-chevron-up');
+            showSettingsButton.classList.add('fa-chevron-down');
+            settingsContainer.style.display = 'none';
+        }
+    });
+
+    ventHumidityLevelInput.addEventListener('change', () => changeSettings());
+    turboHumidityLevelInput.addEventListener('change', () => changeSettings());
+    offHumidityLevelInput.addEventListener('change', () => changeSettings());
+    switchDelayInput.addEventListener('change', () => changeSettings());
+    buttonDelayInput.addEventListener('change', () => changeSettings());
+
+    saveSettingsButton.addEventListener('click', () => sendSettings())
+
     updateData();
     getGraph();
 
     setInterval(updateData, 5000);
+}
+function changeSettings() {
+    saveSettingsButton.disabled = false;
 }
 function switchVent(state) {
     switch (state) {
@@ -165,6 +212,12 @@ function updateState(state) {
 
     turboSwitch.checked = state.state == 2;
     humidityTriggerSwitch.checked = state.humidityTriggerAllowed == 1;
+
+    ventHumidityLevelInput.value = state.ventHumidityLevel;
+    turboHumidityLevelInput.value = state.turboHumidityLevel;
+    offHumidityLevelInput.value = state.offHumidityLevel;
+    switchDelayInput.value = state.switchDelay;
+    buttonDelayInput.value = state.buttonDelay;
 }
 
 function sendState(state) {
