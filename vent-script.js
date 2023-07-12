@@ -10,12 +10,23 @@ let showSettingsButton;
 let saveSettingsButton;
 let ventHumidityLevelInput, turboHumidityLevelInput, offHumidityLevelInput, switchDelayInput, buttonDelayInput;
 
+function getSettings() {
+    fetch(`/settings`)
+        .then(response => response.json())
+        .then(data => {
+            updateSettings(data);
+            console.log('Налаштування отримані: ' + data);
+            saveSettingsButton.disabled = true;
+        })
+        .catch(error => showError(error));
+}
+
 function sendSettings() {
     fetch(`/settings?ventHumidityLevel=${ventHumidityLevelInput.value}&turboHumidityLevel=${turboHumidityLevelInput.value}&offHumidityLevel=${offHumidityLevelInput.value}&switchDelay=${switchDelayInput.value}&buttonDelay=${buttonDelayInput.value}`)
         .then(response => response.json())
         .then(data => {
-            updateState(data);
-            console.log('Стан оновлено: ' + data.state);
+            updateSettings(data);
+            console.log('Налаштування оновлені: ' + data);
             saveSettingsButton.disabled = true;
         })
         .catch(error => showError(error));
@@ -74,6 +85,7 @@ function afterLoad() {
 
     updateData();
     getGraph();
+    getSettings();
 
     setInterval(updateData, 5000);
 }
@@ -186,6 +198,14 @@ function updateGraph(graphData) {
     });
 }
 
+function updateSettings(settings) {
+    ventHumidityLevelInput.value = settings.ventHumidityLevel;
+    turboHumidityLevelInput.value = settings.turboHumidityLevel;
+    offHumidityLevelInput.value = settings.offHumidityLevel;
+    switchDelayInput.value = settings.switchDelay;
+    buttonDelayInput.value = settings.buttonDelay;
+}
+
 function updateState(state) {
     switchVent(state.state);
     const infoContainer = document.getElementById("info-container");
@@ -212,12 +232,6 @@ function updateState(state) {
 
     turboSwitch.checked = state.state == 2;
     humidityTriggerSwitch.checked = state.humidityTriggerAllowed == 1;
-
-    ventHumidityLevelInput.value = state.ventHumidityLevel;
-    turboHumidityLevelInput.value = state.turboHumidityLevel;
-    offHumidityLevelInput.value = state.offHumidityLevel;
-    switchDelayInput.value = state.switchDelay;
-    buttonDelayInput.value = state.buttonDelay;
 }
 
 function sendState(state) {
@@ -245,7 +259,6 @@ function getGraph() {
         .then(data => updateGraph(data))
         // .catch(error => updateGraph(DDDATA));
         .catch(error => showError(error));
-
 }
 
 function updateData() {
