@@ -270,3 +270,11 @@ button[disabled] {
 .input-container button {
     margin-left: 10px;
 }
+
+.settings-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 90px;
+}
