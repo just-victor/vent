@@ -53,6 +53,16 @@
     </div>
     <div id="settingsHideContainer" style="display: none">
         <div class="weather-data">
+            <span class="weather-label">Затримка вентиляції з кнопки, хв:</span>
+            <input class="settings-input" type="number" pattern="\d*" id="buttonDelay" placeholder="1-60хв">
+        </div>
+
+        <div class="weather-data">
+            <span class="weather-label">Рівень вологості вимкнення вентиляції:</span>
+            <input class="settings-input" type="number" pattern="\d*" id="offHumidityLevel" placeholder="0-100%">
+        </div>
+
+        <div class="weather-data">
             <span class="weather-label">Рівень вологості провітрювання:</span>
             <input class="settings-input" type="number" pattern="\d*" id="ventHumidityLevel" placeholder="0-100%">
         </div>
@@ -63,19 +73,10 @@
         </div>
 
         <div class="weather-data">
-            <span class="weather-label">Рівень вологості вимкнення вентиляції:</span>
-            <input class="settings-input" type="number" pattern="\d*" id="offHumidityLevel" placeholder="0-100%">
-        </div>
-
-        <div class="weather-data">
             <span class="weather-label">Затримка між перемиканням режимів, мс:</span>
             <input class="settings-input" type="number" pattern="\d*" id="switchDelay" placeholder="100-1000мс">
         </div>
 
-        <div class="weather-data">
-            <span class="weather-label">Затримка вентиляції з кнопки, хв:</span>
-            <input class="settings-input" type="number" pattern="\d*" id="buttonDelay" placeholder="1-60хв">
-        </div>
         <button id="saveSettingsButton" class="button" disabled>Зберегти</button>
     </div>
 </div>
