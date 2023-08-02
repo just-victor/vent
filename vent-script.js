@@ -177,7 +177,7 @@ function updateGraph(graphData) {
                 spanGaps: true
             },{
                 label: 'Режим',
-                data: graphData.map(it => it.s).map(n => 30 + n * 5).map(zeroToNaN),
+                data: graphData.map(it => it.s).map(n => n === 0 ? 0 : 30 + n * 5).map(zeroToNaN),
                 borderColor: 'rgb(29,157,0)',
                 borderWidth: 2
             }]
