@@ -265,8 +265,8 @@ function getGraph() {
     fetch('/graph')
         .then(response => response.json())
         .then(data => updateGraph(data))
-        .catch(error => updateGraph(DDDATA));
-        // .catch(error => showError(error));
+        // .catch(error => updateGraph(DDDATA));
+        .catch(error => showError(error));
 }
 
 function updateData() {
