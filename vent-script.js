@@ -88,7 +88,7 @@ function afterLoad() {
     getSettings();
 
     setInterval(updateData, 5 * 1000);
-    setInterval(getGraph, 30 * 1000);
+    // setInterval(getGraph, 30 * 1000);
 }
 function changeSettings() {
     saveSettingsButton.disabled = false;
