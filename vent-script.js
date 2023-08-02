@@ -193,7 +193,7 @@ function updateGraph(graphData) {
                         color: function (context) {
                             if (context.index % 60 === 0) {
                                 context.tick.label = `${10 - Math.trunc(context.index / 60)}`;
-                                return 'rgb(29,157,0)';
+                                return 'rgba(0,0,0,0.15)';
                             }
 
                             return "";
@@ -265,8 +265,8 @@ function getGraph() {
     fetch('/graph')
         .then(response => response.json())
         .then(data => updateGraph(data))
-        // .catch(error => updateGraph(DDDATA));
-        .catch(error => showError(error));
+        .catch(error => updateGraph(DDDATA));
+        // .catch(error => showError(error));
 }
 
 function updateData() {
