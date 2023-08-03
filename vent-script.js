@@ -149,6 +149,21 @@ function zeroToNaN(number) {
     }
     return number;
 }
+
+function getLabel(index) {
+    const date = new Date();
+    let hours = new Date().getHours();
+    const res = hours - (10 - index / 60);
+    if (res == 0) {
+        return `00:${date.getMinutes()}`;
+    }
+    if (res < 0) {
+        return `${24 + res}:${date.getMinutes()}`;
+    }
+
+    return `${res}:${date.getMinutes()}`;
+}
+
 function updateGraph(graphData) {
     const labels = Array(graphData.length).fill('');
     new Chart(graph, {
@@ -192,7 +207,7 @@ function updateGraph(graphData) {
                     grid: {
                         color: function (context) {
                             if (context.index % 60 === 0) {
-                                context.tick.label = `${10 - Math.trunc(context.index / 60)}`;
+                                context.tick.label = getLabel(context.index);
                                 return 'rgba(0,0,0,0.15)';
                             }
 
