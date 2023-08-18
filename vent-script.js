@@ -9,8 +9,12 @@ let humidityTriggerSwitch;
 let showSettingsButton;
 let saveSettingsButton;
 let ventHumidityLevelInput, turboHumidityLevelInput, offHumidityLevelInput, switchDelayInput, buttonDelayInput;
+let slider;
+let chart;
+let chartData;
+let divider;
 
-function getSettings() {
+    function getSettings() {
     fetch(`/settings`)
         .then(response => response.json())
         .then(data => {
@@ -44,6 +48,7 @@ function afterLoad() {
     offHumidityLevelInput = document.getElementById('offHumidityLevel');
     switchDelayInput = document.getElementById('switchDelay');
     buttonDelayInput = document.getElementById('buttonDelay');
+    slider = document.getElementById("myRange");
 
     powerButton.addEventListener('click', () => {
         const state = powerButton.classList.contains('off') ? 1 : 0;
@@ -82,6 +87,18 @@ function afterLoad() {
     buttonDelayInput.addEventListener('change', () => changeSettings());
 
     saveSettingsButton.addEventListener('click', () => sendSettings())
+    slider.addEventListener('change', () => {
+        const sliderRange = slider.value;
+        const dataIndex = 600 - sliderRange * 60;
+        divider = sliderRange;
+
+        chart.data.labels = chartData.labels.slice(dataIndex, 600);
+        chart.data.datasets[0].data = chartData.datasets[0].data.slice(dataIndex, 600);
+        chart.data.datasets[1].data = chartData.datasets[1].data.slice(dataIndex, 600);
+        chart.data.datasets[2].data = chartData.datasets[2].data.slice(dataIndex, 600);
+
+        chart.update();
+    })
 
     updateData();
     getGraph();
@@ -150,7 +167,7 @@ function zeroToNaN(number) {
     return number;
 }
 
-function getLabel(index, divider) {
+function getLabel(index) {
     const date = new Date();
     let hours = new Date().getHours();
     const res = hours - (divider - index / 60);
@@ -166,8 +183,8 @@ function getLabel(index, divider) {
 
 function updateGraph(graphData) {
     const labels = Array(graphData.length).fill('');
-    const divider = (graphData.length / 60) | 0;
-    new Chart(graph, {
+    divider = (graphData.length / 60) | 0;
+    chart = new Chart(graph, {
         type: 'line',
         data: {
             labels: labels,
@@ -208,7 +225,7 @@ function updateGraph(graphData) {
                     grid: {
                         color: function (context) {
                             if (context.index % 60 === 0) {
-                                context.tick.label = getLabel(context.index, divider);
+                                context.tick.label = getLabel(context.index);
                                 return 'rgba(0,0,0,0.15)';
                             }
 
@@ -220,6 +237,7 @@ function updateGraph(graphData) {
             radius: 0,
         }
     });
+    chartData = JSON.parse(JSON.stringify(chart.data));
 }
 
 function updateSettings(settings) {
