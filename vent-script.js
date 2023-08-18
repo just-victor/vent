@@ -150,10 +150,10 @@ function zeroToNaN(number) {
     return number;
 }
 
-function getLabel(index) {
+function getLabel(index, divider) {
     const date = new Date();
     let hours = new Date().getHours();
-    const res = hours - (10 - index / 60);
+    const res = hours - (divider - index / 60);
     if (res == 0) {
         return `00:${date.getMinutes()}`;
     }
@@ -166,6 +166,7 @@ function getLabel(index) {
 
 function updateGraph(graphData) {
     const labels = Array(graphData.length).fill('');
+    const divider = (graphData.length / 60) | 0;
     new Chart(graph, {
         type: 'line',
         data: {
@@ -207,7 +208,7 @@ function updateGraph(graphData) {
                     grid: {
                         color: function (context) {
                             if (context.index % 60 === 0) {
-                                context.tick.label = getLabel(context.index);
+                                context.tick.label = getLabel(context.index, divider);
                                 return 'rgba(0,0,0,0.15)';
                             }
 
