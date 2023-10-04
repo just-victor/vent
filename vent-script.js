@@ -277,7 +277,7 @@ function updateState(state) {
 }
 
 function parseState(text) {
-    return JSON.parse(text.replace('nan', '0'));
+    return JSON.parse(text.replaceAll('nan', '0'));
 }
 
 function sendState(state) {
