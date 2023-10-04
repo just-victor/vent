@@ -276,13 +276,14 @@ function updateState(state) {
     humidityTriggerSwitch.checked = state.humidityTriggerAllowed == 1;
 }
 
-function parseState(response) {
-    return JSON.parse(response.text().replace('nan', '0'));
+function parseState(text) {
+    return JSON.parse(text.replace('nan', '0'));
 }
 
 function sendState(state) {
     fetch('/state?state=' + state)
-        .then(response => parseState(response))
+        .then(response => response.text())
+        .then(responseText => parseState(responseText))
         .then(data => {
             updateState(data);
             console.log('Стан оновлено: ' + data.state);
@@ -291,7 +292,8 @@ function sendState(state) {
 }
 function sendHumidityTriggerState(state) {
     fetch('/trigger?state=' + state)
-        .then(response => parseState(response))
+        .then(response => response.text())
+        .then(responseText => parseState(responseText))
         .then(data => {
             updateState(data);
             console.log('Триггер оновлено: ' + data.humidityTriggerAllowed);
@@ -309,7 +311,8 @@ function getGraph() {
 
 function updateData() {
     fetch('/getState')
-        .then(response => parseState(response))
+        .then(response => response.text())
+        .then(responseText => parseState(responseText))
         .then(data => updateState(data))
         .catch(error => showError(error));
 }
@@ -327,7 +330,8 @@ function startTimerFromInput() {
 
 function startTimer(minutes) {
     fetch('/timer?minutes=' + minutes)
-        .then(response => parseState(response))
+        .then(response => response.text())
+        .then(responseText => parseState(responseText))
         .then(data => {
             closeTimerModal();
             updateState(data);
